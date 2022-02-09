@@ -64,8 +64,8 @@ All responses will have the form
 
 **Response:**
 
--`404 Not Found` if the object does not exists
--`200 OK` on success
+- `404 Not Found` if the object does not exists
+- `200 OK` on success
 
 ```json
 {
@@ -83,5 +83,29 @@ All responses will have the form
 
 **Response:**
 
--`404 Not Found` if the object does not exists
+- `404 Not Found` if the object does not exists
+- `200 OK` on success
+
+### Replicate Objects
+
+**Definition:**
+
+`POST /replicate`
+
+**Arguments:**
+
+- `"action":string` Commit || Abort
+
+**Response:**
+
+- `204 Replicated` on success
+
+### Recover Objects
+
+**Definition:**
+
+`GET /recover`
+
+**Response:**
+
 -`200 OK` on success
