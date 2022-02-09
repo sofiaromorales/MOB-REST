@@ -10,23 +10,15 @@ import pickle
 
 app = FastAPI()
 
-objects: List[Object] = [
-    Object(
-        name = 'Object1',
-        date_created = '01/20/2022'
-    ),
-    Object(
-        name = 'Object2',
-        date_created = '01/20/2022'
-    )
-]
+with open('data.json', 'rb') as fp:
+        objects: List[Object] = pickle.load(fp)
 
 
 # GET list of objects
 @app.get('/api/objects')
 async def fetch_objects():
     with open('data.json', 'rb') as fp:
-        data = pickle.load(fp)
+        data: List[Object] = pickle.load(fp)
     return data;
 
 # GET object by name
