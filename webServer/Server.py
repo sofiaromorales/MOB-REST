@@ -5,6 +5,9 @@ from datetime import datetime
 
 from ObjectModel import Object
 
+import pickle
+
+
 app = FastAPI()
 
 objects: List[Object] = [
@@ -22,7 +25,9 @@ objects: List[Object] = [
 # GET list of objects
 @app.get('/api/objects')
 async def fetch_objects():
-    return objects;
+    with open('data.json', 'rb') as fp:
+        data = pickle.load(fp)
+    return data;
 
 # POST create new object
 @app.post('/api/objects')
@@ -31,4 +36,6 @@ async def create_object(object: Object):
     #TODO: if name has blank space turn it into skewer-case
     object.date_created = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
     objects.append(object)
+    with open('data.json', 'wb') as fp:
+        pickle.dump(objects, fp)
     return { 'name' : object.name }
