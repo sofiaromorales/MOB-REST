@@ -18,6 +18,7 @@ objects: List[Object] = [
     )
 ]
 
+## --OBJECT CRUD--
 
 # GET list of objects
 @app.get('/api/objects')
@@ -53,3 +54,18 @@ async def fetch_object(object_name: str):
             objects.remove(object)
             return { 'name' : object_name }
     raise HTTPException(status_code=404, detail='Object Not Found')
+
+## --COORDINATOR OPERATIONS--
+
+# REPLICATE with vote_request
+## vote_request = commit || abort || randomize
+@app.post('/api/coordinator/replicate/{vote_request}')
+async def request_replication(vote_request: str):
+    # TODO: Call coordinator method `replicateObject(vote_request, objectsData)`
+    raise HTTPException(status_code=400, detail='Bad Request')
+
+# RESTORE data from replication servers
+@app.get('/api/coordinator/restore')
+async def request_restore():
+    # TODO: Call coordinator method `RecibirObjetos(vote_request)`
+    raise HTTPException(status_code=400, detail='Bad Request')
