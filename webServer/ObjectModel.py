@@ -1,8 +1,8 @@
-from pydantic import Basemodel
+from pydantic import BaseModel
 from typing import Optional
-from uuid import UUID,
+from uuid import UUID, uuid4
 
 class Object(BaseModel):
-    id: UUID,
-    name: str,
+    id: Optional[UUID] = uuid4()
+    name: str
     date_created: str
