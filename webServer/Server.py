@@ -84,8 +84,6 @@ async def request_replication(vote_request: str):
     else:
         raise HTTPException(status_code=404, detail='Replication not succeded')
 
-
-
 # RESTORE data from replication servers
 @app.get('/api/coordinator/restore')
 async def request_restore():
