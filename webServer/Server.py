@@ -3,11 +3,11 @@ from typing import List
 from uuid import UUID, uuid4
 from datetime import datetime
 import logging
-
+import jsonpickle
 from ObjectModel import Object
 import ApplicationClient
 
-import pickle
+import json
 
 
 app = FastAPI()
@@ -15,28 +15,31 @@ app = FastAPI()
 FORMAT = "%(levelname)s:%(message)s"
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
-# objects: List[Object] = [
-#     Object(
-#         name = 'Object1',
-#         date_created = '01/20/2022'
+#objects: List[Object] = [
+#    Object(
+#        name = 'Object1',
+#       date_created = '01/20/2022'
 #     ),
 #     Object(
 #         name = 'Object2',
-#         date_created = '01/20/2022'
+#        date_created = '01/20/2022'
 #     )
 # ]
 
 with open('data.json', 'rb') as fp:
-        objects: List[Object] = pickle.load(fp)
+        objects= []
+        data = json.loads(fp.read())
+        print(data)
+        for d in data:
+            o= Object(name=d["name"], date_created=d["date_created"])
+            objects.append(o)
 
 ## --OBJECT CRUD--
 
 # GET list of objects
 @app.get('/api/objects')
 async def fetch_objects():
-    with open('data.json', 'rb') as fp:
-        data: List[Object] = pickle.load(fp)
-    return data;
+    return objects;
 
 # GET object by name
 @app.get('/api/objects/{object_name}')
@@ -57,8 +60,15 @@ async def create_object(object: Object):
             raise HTTPException(status_code=409, detail='Object Already Exists')
     object.date_created = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
     objects.append(object)
-    with open('data.json', 'wb') as fp:
-        pickle.dump(objects, fp)
+    data= []
+    for o in objects:
+        d={
+            "name": o.name,
+            "date_created": o.date_created
+        }
+        data.append(d)
+    with open('data.json', 'w') as fp:
+        json.dump(data, fp, sort_keys=True, indent=4)
     return { 'name' : object.name }
 
 # DELETE object by name
@@ -67,8 +77,15 @@ async def fetch_object(object_name: str):
     for object in objects:
         if object.name == object_name:
             objects.remove(object)
-            with open('data.json', 'wb') as fp:
-                pickle.dump(objects, fp)
+            data= []
+            for o in objects:
+                d={
+                    "name": o.name,
+                    "date_created": o.date_created
+                }
+                data.append(d)
+            with open('data.json', 'w') as fp:
+                json.dump(data, fp,sort_keys=True, indent=4)
             return { 'name' : object_name }
     raise HTTPException(status_code=404, detail='Object Not Found')
 
