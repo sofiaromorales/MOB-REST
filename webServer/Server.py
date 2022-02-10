@@ -50,5 +50,7 @@ async def fetch_object(object_name: str):
     for object in objects:
         if object.name == object_name:
             objects.remove(object)
+            with open('data.json', 'wb') as fp:
+                pickle.dump(objects, fp)
             return { 'name' : object_name }
     raise HTTPException(status_code=404, detail='Object Not Found')
