@@ -2,10 +2,15 @@ from fastapi import FastAPI, HTTPException
 from typing import List
 from uuid import UUID, uuid4
 from datetime import datetime
+import logging
 
 from ObjectModel import Object
+import ApplicationClient
 
 app = FastAPI()
+
+FORMAT = "%(levelname)s:%(message)s"
+logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 objects: List[Object] = [
     Object(
@@ -61,8 +66,9 @@ async def fetch_object(object_name: str):
 ## vote_request = commit || abort || randomize
 @app.post('/api/coordinator/replicate/{vote_request}')
 async def request_replication(vote_request: str):
-    # TODO: Call coordinator method `replicateObject(vote_request, objectsData)`
-    raise HTTPException(status_code=400, detail='Bad Request')
+    ApplicationClient.getCoordinatorReplica(vote_request, vote_request)
+    raise HTTPException(status_code=200, detail='Replication succeded')
+
 
 # RESTORE data from replication servers
 @app.get('/api/coordinator/restore')
