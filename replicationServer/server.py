@@ -2,6 +2,8 @@ from xmlrpc.server import SimpleXMLRPCServer
 import os
 import sys
 import inspect
+import json
+
 
 currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 parentdir = os.path.dirname(currentdir)
@@ -12,7 +14,8 @@ import constants
 def replicateRequest(vote_request, data):
     print('replicateRequest')
     if vote_request == 'commit':
-        # TODO: Implement replication service
+        with open('data.json', 'w') as fp:
+                json.dump(data, fp,sort_keys=True, indent=4)
         return 1
     else:
         return -1

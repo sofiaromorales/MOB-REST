@@ -3,7 +3,6 @@ from typing import List
 from uuid import UUID, uuid4
 from datetime import datetime
 import logging
-import jsonpickle
 from ObjectModel import Object
 import ApplicationClient
 
