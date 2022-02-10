@@ -7,28 +7,36 @@ import logging
 from ObjectModel import Object
 import ApplicationClient
 
+import pickle
+
+
 app = FastAPI()
 
 FORMAT = "%(levelname)s:%(message)s"
 logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
-objects: List[Object] = [
-    Object(
-        name = 'Object1',
-        date_created = '01/20/2022'
-    ),
-    Object(
-        name = 'Object2',
-        date_created = '01/20/2022'
-    )
-]
+# objects: List[Object] = [
+#     Object(
+#         name = 'Object1',
+#         date_created = '01/20/2022'
+#     ),
+#     Object(
+#         name = 'Object2',
+#         date_created = '01/20/2022'
+#     )
+# ]
+
+with open('data.json', 'rb') as fp:
+        objects: List[Object] = pickle.load(fp)
 
 ## --OBJECT CRUD--
 
 # GET list of objects
 @app.get('/api/objects')
 async def fetch_objects():
-    return objects;
+    with open('data.json', 'rb') as fp:
+        data: List[Object] = pickle.load(fp)
+    return data;
 
 # GET object by name
 @app.get('/api/objects/{object_name}')
@@ -49,6 +57,8 @@ async def create_object(object: Object):
             raise HTTPException(status_code=409, detail='Object Already Exists')
     object.date_created = datetime.today().strftime('%Y-%m-%d-%H:%M:%S')
     objects.append(object)
+    with open('data.json', 'wb') as fp:
+        pickle.dump(objects, fp)
     return { 'name' : object.name }
 
 # DELETE object by name
@@ -57,6 +67,8 @@ async def fetch_object(object_name: str):
     for object in objects:
         if object.name == object_name:
             objects.remove(object)
+            with open('data.json', 'wb') as fp:
+                pickle.dump(objects, fp)
             return { 'name' : object_name }
     raise HTTPException(status_code=404, detail='Object Not Found')
 
