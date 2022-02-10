@@ -12,4 +12,4 @@ import constants
 proxy = xmlrpc.client.ServerProxy('http://' + constants.COORDINATOR_ADDRESS + ':' + str(constants.COORDINATOR_PORT))
 
 def getCoordinatorReplica(vote_request, data):
-    proxy.replicateObjects(vote_request, data)
+    return proxy.replicateObjects(vote_request, data)

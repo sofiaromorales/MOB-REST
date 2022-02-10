@@ -66,8 +66,12 @@ async def fetch_object(object_name: str):
 ## vote_request = commit || abort || randomize
 @app.post('/api/coordinator/replicate/{vote_request}')
 async def request_replication(vote_request: str):
-    ApplicationClient.getCoordinatorReplica(vote_request, vote_request)
-    raise HTTPException(status_code=200, detail='Replication succeded')
+    res = ApplicationClient.getCoordinatorReplica(vote_request, objects)
+    if (res) == 1:
+        raise HTTPException(status_code=200, detail='Replication succeded')
+    else:
+        raise HTTPException(status_code=404, detail='Replication not succeded')
+
 
 
 # RESTORE data from replication servers
