@@ -87,5 +87,8 @@ async def request_replication(vote_request: str):
 # RESTORE data from replication servers
 @app.get('/api/coordinator/restore')
 async def request_restore():
-    # TODO: Call coordinator method `RecibirObjetos(vote_request)`
-    raise HTTPException(status_code=400, detail='Bad Request')
+    res = ApplicationClient.getObjectsRestore(objects)
+    if (res) == 1:
+        raise HTTPException(status_code=200, detail='Replication succeded')
+    else:
+        raise HTTPException(status_code=404, detail='Replication not succeded')
