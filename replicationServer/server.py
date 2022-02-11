@@ -38,7 +38,7 @@ def restoreRequest():
         return objects
 
 
-server = SimpleXMLRPCServer((constants.REPLICATION_SERVER_1_ADDRESS, constants.REPLICATION_SERVER_1_PORT), allow_none=True)
+server = SimpleXMLRPCServer((constants.REPLICATION_SERVER_2_ADDRESS, constants.REPLICATION_SERVER_2_PORT), allow_none=True)
 # serverrest = SimpleXMLRPCServer((constants.RESTORE_SERVER_1_ADDRESS, constants.RESTORE_SERVER_1_PORT), allow_none=True)
 
 server.register_function(restoreRequest, 'restoreRequest')
