@@ -27,11 +27,7 @@ logging.basicConfig(format=FORMAT, level=logging.DEBUG)
 
 with open('data.json', 'rb') as fp:
         objects= []
-        data = json.loads(fp.read())
-        print(data)
-        for d in data:
-            o= Object(name=d["name"], date_created=d["date_created"])
-            objects.append(o)
+        json.dump(objects, fp, sort_keys=True, indent=4)        
 
 ## --OBJECT CRUD--
 
@@ -104,7 +100,10 @@ async def request_replication(vote_request: str):
 @app.get('/api/coordinator/restore')
 async def request_restore():
     restore = ApplicationClient.getObjectsRestore()
-    data= []
     with open('data.json', 'w') as fp:
+        data = json.loads(fp.read())
+        for d in data:
+            o= Object(name=d["name"], date_created=d["date_created"])
+            objects.append(o)
         json.dump(restore, fp,sort_keys=True, indent=4)
     raise HTTPException(status_code=200, detail='Restore succeded')
