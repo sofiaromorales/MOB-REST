@@ -1,6 +1,7 @@
 from xmlrpc.server import SimpleXMLRPCServer
 import os
 import sys
+from ObjectModel import Object
 import inspect
 import json
 
@@ -24,8 +25,12 @@ def replicateRequest(vote_request, data):
 
 def restoreRequest( data):
     print('restoreRequest')
-    # TODO: Implement restore service
-    return 1
+    objects= []
+    data = json.loads(fp.read())
+    for d in data:
+        o= Object(name=d["name"], date_created=d["date_created"])
+        objects.append(o)    
+    return objects
 
 
 server = SimpleXMLRPCServer((constants.REPLICATION_SERVER_1_ADDRESS, constants.REPLICATION_SERVER_1_PORT), allow_none=True)
