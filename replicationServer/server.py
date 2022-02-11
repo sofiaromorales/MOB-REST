@@ -24,17 +24,16 @@ def replicateRequest(vote_request, data):
         return -1
 
 def restoreRequest():
-    print('hola')
     with open('data.json', 'r') as fp:
         print('restoreRequest')
         objects= []
-        data = json.loads(fp.read())
-        for d in data:
-            o= Object(name=d["name"], date_created=d["date_created"])
-            objects.append(o)
-            print(o)   
-        print('objects')
-        print(objects)
+        try:
+            data = json.loads(fp.read())
+            for d in data:
+                o= Object(name=d["name"], date_created=d["date_created"])
+                objects.append(o)
+        except ValueError:
+            print('Decode failed')
         return objects
 
 
