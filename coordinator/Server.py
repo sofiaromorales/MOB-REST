@@ -20,9 +20,9 @@ def replicateObjects(vote_request, data):
     else:
         return replicationServerProxy.replicateRequest(vote_request, data)
 
-def restoregetObjects(data):
+def restoregetObjects():
     print('restoregetObjects')
-    return replicationServerProxy.restoreRequest(data)
+    return replicationServerProxy.restoreRequest()
 
 
 # restoreServerProxy = xmlrpc.client.ServerProxy('http://' + constants.COORDINATOR_ADDRESS + ':' + str(constants.RESTORE_SERVER_1_PORT))

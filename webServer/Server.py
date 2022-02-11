@@ -103,7 +103,7 @@ async def request_replication(vote_request: str):
 # RESTORE data from replication servers
 @app.get('/api/coordinator/restore')
 async def request_restore():
-    restore = ApplicationClient.getObjectsRestore(objects)
+    restore = ApplicationClient.getObjectsRestore()
     data= []
     for o in restore:
         d={

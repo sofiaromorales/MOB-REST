@@ -23,14 +23,18 @@ def replicateRequest(vote_request, data):
         print('abort')
         return -1
 
-def restoreRequest( data):
-    with open('data.json', 'w') as fp:
+def restoreRequest():
+    print('hola')
+    with open('data.json', 'r') as fp:
         print('restoreRequest')
         objects= []
         data = json.loads(fp.read())
         for d in data:
             o= Object(name=d["name"], date_created=d["date_created"])
-            objects.append(o)    
+            objects.append(o)
+            print(o)   
+        print('objects')
+        print(objects)
         return objects
 
 

@@ -14,5 +14,5 @@ proxy = xmlrpc.client.ServerProxy('http://' + constants.COORDINATOR_ADDRESS + ':
 def getCoordinatorReplica(vote_request, data):
     return proxy.replicateObjects(vote_request, data)
 
-def getObjectsRestore(data):
-    return proxy.restoregetObjects(data)
+def getObjectsRestore():
+    return proxy.restoregetObjects()
