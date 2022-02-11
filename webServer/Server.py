@@ -103,8 +103,14 @@ async def request_replication(vote_request: str):
 # RESTORE data from replication servers
 @app.get('/api/coordinator/restore')
 async def request_restore():
-    res = ApplicationClient.getObjectsRestore(objects)
-    if (res) == 1:
-        raise HTTPException(status_code=200, detail='Restore succeded')
-    else:
-        raise HTTPException(status_code=404, detail='Restore not succeded')
+    restore = ApplicationClient.getObjectsRestore(objects)
+    data= []
+    for o in restore:
+        d={
+            "name": o.name,
+            "date_created": o.date_created
+        }
+        data.append(d)
+    with open('data.json', 'w') as fp:
+        json.dump(data, fp,sort_keys=True, indent=4)
+    raise HTTPException(status_code=200, detail='Restore succeded')
