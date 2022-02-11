@@ -24,13 +24,14 @@ def replicateRequest(vote_request, data):
         return -1
 
 def restoreRequest( data):
-    print('restoreRequest')
-    objects= []
-    data = json.loads(fp.read())
-    for d in data:
-        o= Object(name=d["name"], date_created=d["date_created"])
-        objects.append(o)    
-    return objects
+    with open('data.json', 'w') as fp:
+        print('restoreRequest')
+        objects= []
+        data = json.loads(fp.read())
+        for d in data:
+            o= Object(name=d["name"], date_created=d["date_created"])
+            objects.append(o)    
+        return objects
 
 
 server = SimpleXMLRPCServer((constants.REPLICATION_SERVER_1_ADDRESS, constants.REPLICATION_SERVER_1_PORT), allow_none=True)
