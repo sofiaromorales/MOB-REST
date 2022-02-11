@@ -105,12 +105,6 @@ async def request_replication(vote_request: str):
 async def request_restore():
     restore = ApplicationClient.getObjectsRestore()
     data= []
-    for o in restore:
-        d={
-            "name": o.name,
-            "date_created": o.date_created
-        }
-        data.append(d)
     with open('data.json', 'w') as fp:
-        json.dump(data, fp,sort_keys=True, indent=4)
+        json.dump(restore, fp,sort_keys=True, indent=4)
     raise HTTPException(status_code=200, detail='Restore succeded')
