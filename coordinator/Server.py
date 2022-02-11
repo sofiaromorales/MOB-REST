@@ -20,17 +20,17 @@ def replicateObjects(vote_request, data):
         return replicationServerProxy.replicateRequest(vote_request, data)
 
 def restoregetObjects(data):
-    return restoreServerProxy.restoreRequest(data)
-    
+    print('restoregetObjects')
+    return replicationServerProxy.restoreRequest(data)
 
-restoreServerProxy = xmlrpc.client.ServerProxy('http://' + constants.COORDINATOR_ADDRESS + ':' + str(constants.RESTORE_SERVER_1_PORT))
+
+# restoreServerProxy = xmlrpc.client.ServerProxy('http://' + constants.COORDINATOR_ADDRESS + ':' + str(constants.RESTORE_SERVER_1_PORT))
 
 replicationServerProxy = xmlrpc.client.ServerProxy('http://' + constants.COORDINATOR_ADDRESS + ':' + str(constants.REPLICATION_SERVER_1_PORT))
 
-server = SimpleXMLRPCServer((constants.RESTORE_SERVER_1_PORT, constants.COORDINATOR_PORT), allow_none=True)
-server.register_function(restoregetObjects, 'restoregetObjects')
-
-
 server = SimpleXMLRPCServer((constants.REPLICATION_SERVER_1_ADDRESS, constants.COORDINATOR_PORT), allow_none=True)
+server.register_function(restoregetObjects, 'restoregetObjects')
 server.register_function(replicateObjects, 'replicateObjects')
+# server = SimpleXMLRPCServer((constants.REPLICATION_SERVER_1_ADDRESS, constants.COORDINATOR_PORT), allow_none=True)
+
 server.serve_forever()

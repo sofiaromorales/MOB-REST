@@ -105,6 +105,6 @@ async def request_replication(vote_request: str):
 async def request_restore():
     res = ApplicationClient.getObjectsRestore(objects)
     if (res) == 1:
-        raise HTTPException(status_code=200, detail='Replication succeded')
+        raise HTTPException(status_code=200, detail='Restore succeded')
     else:
-        raise HTTPException(status_code=404, detail='Replication not succeded')
+        raise HTTPException(status_code=404, detail='Restore not succeded')
