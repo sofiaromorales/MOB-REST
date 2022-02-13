@@ -22,14 +22,12 @@ All responses will have the form
 ```json
 [
   {
-    "id": 1,
     "name": "Object",
-    "date+created": "MM-DD-YYYY"
+    "date_created": "MM-DD-YYYY"
   },
   {
-    "id": 2,
     "name": "Object",
-    "date+created": "MM-DD-YYYY"
+    "date_created": "MM-DD-YYYY"
   },
 ]
 ```
@@ -50,9 +48,8 @@ All responses will have the form
 
 ```json
 {
-  "id": 1,
   "name": "Object",
-  "date+created": "MM-DD-YYYY"
+  "date_created": "MM-DD-YYYY"
 }
 ```
 
@@ -60,7 +57,7 @@ All responses will have the form
 
 **Definition:**
 
-`GET /objects/:id`
+`GET /objects/:name`
 
 **Response:**
 
@@ -69,9 +66,8 @@ All responses will have the form
 
 ```json
 {
-  "id": 1,
   "name": "Object",
-  "date+created": "MM-DD-YYYY"
+  "date_created": "MM-DD-YYYY"
 }
 ```
 
