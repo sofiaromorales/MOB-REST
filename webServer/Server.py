@@ -34,7 +34,7 @@ with open('data.json', 'w') as fp:
 # GET list of objects
 @app.get('/api/objects')
 async def fetch_objects():
-    return objects;
+    return objects
 
 # GET object by name
 @app.get('/api/objects/{object_name}')
