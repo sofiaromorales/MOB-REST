@@ -104,4 +104,4 @@ All responses will have the form
 
 **Response:**
 
--`200 OK` on success
+- `200 OK` on success
